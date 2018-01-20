@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--© 2018 Robert J Sullivan
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl) -->
+<odoo>
+  <template id="report_saleorder_modification" inherit_id="sale.report_saleorder_document">
+    <!-- <xpath expr="//table[contains(@class, 'table-condensed')]" position="before"> -->
+    <xpath expr="//div[@class='page']/div[@class='row'][1]" position="replace">
+      <div class="row">
+        <div class="col-xs-12">
+          <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
+            <div class="col-xs-6">
+              <strong>Customer:</strong>
+              <div t-field="doc.partner_id" t-options="{'widget': 'contact', 'fields': ['address', 'name'], 'no_marker': True}" />
+            </div>
+            <div class="col-xs-6">
+              <strong>Invoicing and Shipping Address:</strong>
+              <div t-field="doc.partner_invoice_id" t-options="{'widget': 'contact', 'fields': ['address', 'name', 'phone', 'fax'], 'no_marker': True, 'phone_icons': True}"/>
+              <p t-if="doc.partner_id.vat">VAT: <span t-field="doc.partner_id.vat"/>
+              </p>
+            </div>
+          </t>
+          <t t-if="doc.partner_shipping_id != doc.partner_invoice_id">
+            <div class="col-xs-4">
+              <strong>Customer:</strong>
+              <div t-field="doc.partner_id" t-options="{'widget': 'contact', 'fields': ['address', 'name'], 'no_marker': True}" />
+            </div>
+            <div class="col-xs-4">
+              <strong>Invoicing Address:</strong>
+              <div t-field="doc.partner_invoice_id" t-options="{'widget': 'contact', 'fields': ['address', 'name', 'phone', 'fax'], 'no_marker': True, 'phone_icons': True}"/>
+            </div>
+            <div class="col-xs-4">
+              <strong>Shipping Address:</strong>
+              <div t-field="doc.partner_shipping_id" t-options="{'widget': 'contact', 'fields': ['address', 'name', 'phone', 'fax'], 'no_marker': True, 'phone_icons': True}"/>
+              <p t-if="doc.partner_id.vat">VAT: <span t-field="doc.partner_id.vat"/>
+              </p>
+            </div>
+          </t>
+        </div>
+      </div>
+    </xpath>
+  </template>
+</odoo>
